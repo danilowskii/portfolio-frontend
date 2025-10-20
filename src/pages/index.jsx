@@ -105,19 +105,22 @@ function Index() {
           {/*====================================================================*/}
         </div>
         {/*Seção correspondente a cada botão*/}
-        <div className="w-full grid grid-cols-3 mt-5 h-[160px]">
+        <div className="w-full grid grid-cols-3 mt-5 h-[180px]">
           {cardProjects.map((project, index) => (
             <div
               key={index}
-              className="bg-[#120620]/30 pt-3 px-4 border-white/40 border-[1px] hover:bg-[#120620] hover:border-[#FD485C] cursor-pointer h-full w-[200px] rounded-[20px] "
+              className="bg-[#120620]/30 flex flex-col justify-between p-4 border-white/40 border-[1px] hover:bg-[#120620] hover:border-[#FD485C] cursor-pointer h-full w-[230px] rounded-[20px] "
             >
-              <h2
-                className="font-serif text-lg font-semibold text-[#FD485C]"
-                key={index}
-              >
-                {project.title}
-              </h2>
-              <p className="text-[#F9FAF7] font-serif">{project.details}</p>
+              <div>
+                <h2
+                  className="font-serif text-lg font-semibold text-[#FD485C]"
+                  key={index}
+                >
+                  {project.title}
+                </h2>
+                <p className="text-[#F9FAF7] font-serif">{project.details}</p>
+              </div>
+              <Button variant="primary">Veja mais</Button>
             </div>
           ))}
         </div>
