@@ -4,29 +4,18 @@ import logo from "../assets/logo.svg";
 import TextType from "../components/TextType";
 import Button from "../components/Button";
 import ContactBox from "../components/ContactBox";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import PersonalInfo from "../components/PersonalInfo";
+import useClickOutside from "../hooks/useClickOutside";
 
 function Index() {
   {
     /*Função para ativar o dropdown para escolher o idioma da página*/
   }
   const [dropDownLanguage, setDropDownLanguage] = useState(false);
-  const dropdownRef = useRef(null);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropDownLanguage(false);
-      }
-    };
+  const ref = useRef(null);
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Limpa o listener quando o componente desmontar
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useClickOutside(ref, () => setDropDownLanguage(false));
 
   const changeLanguage = () => {
     setDropDownLanguage((prev) => !prev);
@@ -73,15 +62,25 @@ function Index() {
               FULLSTACK | INTELIGÊNCIA ARTIFICIAL
             </h3>
           </div>
-          <div className="relative ">
-            <Button onClick={() => changeLanguage()} variant="primary">
-              🇧🇷 Português <img id="seta" src={dropdown} className="h-6" />
+          <div ref={ref} className="relative ">
+            <Button
+              onClick={() => changeLanguage((prev) => !prev)}
+              variant="primary"
+            >
+              🇧🇷 Português{" "}
+              <img
+                src={dropdown}
+                className={`h-6 rounded-full ${
+                  dropDownLanguage
+                    ? "rotate-180 transition-transform ease-in-out"
+                    : "transition-transform  ease-in-out"
+                }`}
+              />
             </Button>
 
             {dropDownLanguage && (
               <div
-                ref={dropdownRef}
-                className={`absolute z-50 w-full text-[#F9FAF7] font-normal transition-all duration-300 ease-in-out text-center rounded-[11px] bg-[#FD485C]/90 mt-2`}
+                className={`absolute font-serif z-50 w-full text-[#F9FAF7] font-normal transition-transform duration-300 ease-in-out text-center rounded-[11px] bg-[#FD485C] mt-2`}
               >
                 <p className="hover:bg-[#F9FAF7] hover:text-[#FD485C] cursor-pointer p-2 rounded-t">
                   🇧🇷 Português
@@ -138,7 +137,7 @@ function Index() {
                 className={
                   buttonText === selectedButton
                     ? `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-10 items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620] border border-[#FD485C]`
-                    : `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-10 items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620]/20 hover:bg-[#120620] border-white/50 hover:border-[#FD485C] border`
+                    : `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-10 items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620]/20 hover:bg-[#120620] border-white/50 border`
                 }
               >
                 {buttonText}
