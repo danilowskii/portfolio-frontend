@@ -4,10 +4,34 @@ import logo from "../assets/logo.svg";
 import TextType from "../components/TextType";
 import Button from "../components/Button";
 import ContactBox from "../components/ContactBox";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import PersonalInfo from "../components/PersonalInfo";
 
 function Index() {
+  {
+    /*Função para ativar o dropdown para escolher o idioma da página*/
+  }
+  const [dropDownLanguage, setDropDownLanguage] = useState(false);
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropDownLanguage(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Limpa o listener quando o componente desmontar
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const changeLanguage = () => {
+    setDropDownLanguage((prev) => !prev);
+  };
+
   const [selectedButton, setSelectedButton] = useState("SOBRE");
 
   const handleSelectButton = (button) => {
@@ -40,18 +64,37 @@ function Index() {
         />
       </div>
       {/*Container principal com fundo de vidro*/}
-      <div className="bg-white/10 px-14 py-10 w-[1080px] backdrop-blur-3xl border-white/40 border-[1px] h-[90%] my-auto flex flex-col mx-auto absolute inset-0 z-20 rounded-[40px]">
+      <div className="bg-white/10 px-14 py-10 w-[1080px] backdrop-blur-3xl border-white/40 border h-[90%] my-auto flex flex-col mx-auto absolute inset-0 z-20 rounded-[40px]">
         {/*Cabeçalho com nome e botão de idioma*/}
-        <div className="flex flex-row  h-[70px] justify-between w-full border-b-[1px] border-white">
+        <div className="flex flex-row  h-[70px] justify-between w-full border-b border-white">
           <div className="flex flex-col text-[#F9FAF7] text-xl font-serif ">
             <h3 className="">DANILO PAIVA - DESENVOLVEDOR DE SOFTWARE</h3>
             <h3 className="text-[#F9FAF7]">
               FULLSTACK | INTELIGÊNCIA ARTIFICIAL
             </h3>
           </div>
-          <Button variant="primary">
-            (BR) Português <img src={dropdown} className="h-6" />
-          </Button>
+          <div className="relative ">
+            <Button onClick={() => changeLanguage()} variant="primary">
+              🇧🇷 Português <img id="seta" src={dropdown} className="h-6" />
+            </Button>
+
+            {dropDownLanguage && (
+              <div
+                ref={dropdownRef}
+                className={`absolute z-50 w-full text-[#F9FAF7] font-normal transition-all duration-300 ease-in-out text-center rounded-[11px] bg-[#FD485C]/90 mt-2`}
+              >
+                <p className="hover:bg-[#F9FAF7] hover:text-[#FD485C] cursor-pointer p-2 rounded-t">
+                  🇧🇷 Português
+                </p>
+                <p className="hover:bg-[#F9FAF7] hover:text-[#FD485C] cursor-pointer p-2">
+                  🇺🇸 English
+                </p>
+                <p className="hover:bg-[#F9FAF7] hover:text-[#FD485C] cursor-pointer p-2 rounded-b">
+                  🇪🇸 Español
+                </p>
+              </div>
+            )}
+          </div>
           {/*======================================================================*/}
         </div>
         {/*Seção de apresentação com text head + logo */}
@@ -94,8 +137,8 @@ function Index() {
                 key={index}
                 className={
                   buttonText === selectedButton
-                    ? `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-[40px] items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620] border-[1px] border-[#FD485C]`
-                    : `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-[40px] items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620]/20 hover:bg-[#120620] border-white/50 hover:border-[#FD485C] border-[1px]`
+                    ? `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-10 items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620] border border-[#FD485C]`
+                    : `py-3 px-6 transition-all duration-300 max-w-[300px] flex gap-4 h-10 items-center text-[#F9FAF7] text-center rounded-[11px] cursor-pointer bg-[#120620]/20 hover:bg-[#120620] border-white/50 hover:border-[#FD485C] border`
                 }
               >
                 {buttonText}
@@ -105,11 +148,11 @@ function Index() {
           {/*====================================================================*/}
         </div>
         {/*Seção correspondente a cada botão*/}
-        <div className="w-full grid grid-cols-3 mt-5 h-[180px]">
+        <div className="w-full  grid grid-cols-[auto_auto_auto] justify-between mt-5 h-[180px]">
           {cardProjects.map((project, index) => (
             <div
               key={index}
-              className="bg-[#120620]/30 flex flex-col justify-between p-4 border-white/40 border-[1px] hover:bg-[#120620] hover:border-[#FD485C] cursor-pointer h-full w-[230px] rounded-[20px] "
+              className="bg-[#120620]/30 flex flex-col justify-between p-4 border-white/40 border hover:bg-[#120620] hover:border-[#FD485C] cursor-pointer h-full w-[230px] rounded-[20px] "
             >
               <div>
                 <h2
