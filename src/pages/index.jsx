@@ -7,6 +7,11 @@ import ContactBox from "../components/ContactBox";
 import { useRef, useState } from "react";
 import PersonalInfo from "../components/PersonalInfo";
 import useClickOutside from "../hooks/useClickOutside";
+import AboutMe from "../components/AboutMe";
+import Techs from "../components/Tech";
+import Services from "../components/Services";
+import Contact from "../components/Contact";
+import Projects from "../components/Projects";
 
 function Index() {
   {
@@ -37,11 +42,6 @@ function Index() {
     "CONTATO",
   ];
 
-  const cardProjects = [
-    { id: "1", title: "Projeto X", details: "IA for something" },
-    { id: "2", title: "Projeto Y", details: "Cloud database" },
-    { id: "3", title: "Projeto Z", details: "Landing page for M" },
-  ];
   return (
     <>
       <div className="p-0 m-0 overflow-hidden box-border h-screen w-screen relative">
@@ -144,28 +144,22 @@ function Index() {
               </Button>
             ))}
           </div>
-          {/*====================================================================*/}
+          <div className="h-[180px] w-full mt-5 flex">
+            {selectedButton === "SOBRE" ? (
+              <AboutMe />
+            ) : selectedButton === "TECNOLOGIAS" ? (
+              <Techs />
+            ) : selectedButton === "PROJETOS" ? (
+              <Projects />
+            ) : selectedButton === "SERVIÇOS" ? (
+              <Services />
+            ) : selectedButton === "CONTATO" ? (
+              <Contact />
+            ) : null}
+          </div>
         </div>
         {/*Seção correspondente a cada botão*/}
-        <div className="w-full  grid grid-cols-[auto_auto_auto] justify-between mt-5 h-[180px]">
-          {cardProjects.map((project, index) => (
-            <div
-              key={index}
-              className="bg-[#120620]/30 flex flex-col justify-between p-4 border-white/40 border hover:bg-[#120620] hover:border-[#FD485C] cursor-pointer h-full w-[230px] rounded-[20px] "
-            >
-              <div>
-                <h2
-                  className="font-serif text-lg font-semibold text-[#FD485C]"
-                  key={index}
-                >
-                  {project.title}
-                </h2>
-                <p className="text-[#F9FAF7] font-serif">{project.details}</p>
-              </div>
-              <Button variant="primary">Veja mais</Button>
-            </div>
-          ))}
-        </div>
+
         <div className=" max-h-50 flex justify-between mt-10">
           <ContactBox />
           <PersonalInfo />
