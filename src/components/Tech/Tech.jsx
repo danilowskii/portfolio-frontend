@@ -14,10 +14,12 @@ import {
   SiExpress,
   SiTailwindcss,
   SiVite,
+  SiFigma,
 } from "react-icons/si";
 
 const techLogos = [
   { node: <SiReact />, title: "React", href: "https://react.dev" },
+  { node: <SiFigma />, title: "Figma", href: "https://www.figma.com/" },
   {
     node: <SiJavascript />,
     title: "JavaScript",
@@ -61,13 +63,15 @@ const Techs = () => {
   return (
     <div
       className="
+      relative
         h-[180px]
-        w-[50%]
+        w-[100%]
         position-relative
         overflow-hidden
         flex
         items-center
         text-[#120620]
+        
       "
     >
       <LogoLoop
